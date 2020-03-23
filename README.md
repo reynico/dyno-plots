@@ -13,6 +13,7 @@ pip install -r requirements.txt
 ```
 python app.py
 ```
+Tip: If you don't have any files at hand, take a look at the [samples](samples/) folder.
 
 ## Access
 > http://127.0.0.1:5001/
