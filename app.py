@@ -49,14 +49,14 @@ app.layout = html.Div([
             'borderStyle': 'dashed',
             'borderRadius': '5px',
             'textAlign': 'center',
-            'margin': '10px'
+            'margin': '10px 0'
         },
         # Allow multiple files to be uploaded
         multiple=True
     ),
-    dcc.Graph(id='Mygraph', config=config),
+    dcc.Graph(id='Mygraph', config=config, style={'height': 'calc(100vh - 80px)', 'width': '100%', 'overflow': 'hidden'}),
     html.Div(id='output-data-upload')
-])
+], style={'margin': '0', 'padding': '0', 'overflow': 'hidden'})
 
 
 def parse_horacio_resio(hr):
@@ -162,7 +162,11 @@ def update_graph(contents, filename):
     fig = {
         'layout': go.Layout(
             plot_bgcolor=colors["graphBackground"],
-            paper_bgcolor=colors["graphBackground"])
+            paper_bgcolor=colors["graphBackground"],
+            yaxis=dict(
+                nticks=30,
+                range=[0, None],
+            ))
     }
     if contents:
         dfx1 = pd.DataFrame()
@@ -192,4 +196,4 @@ def update_output(list_of_contents, list_of_names):
 
 
 if __name__ == '__main__':
-    app.run_server(port=5001, debug=True)
+    app.run_server(host="0.0.0.0", port=5001, debug=False)
