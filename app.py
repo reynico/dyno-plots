@@ -93,7 +93,7 @@ def parse_mwd(root):
             for nombre in root2.iter('Nombre'):
                 root3 = etree.Element('root')
                 root3 = nombre
-                if root3.text == "RPM Motor" or root3.text == "RPM Motor Filtrada":
+                if root3.text and (root3.text.lower() == "rpm motor" or root3.text.lower() == "RPM Motor Filtrada"):
                     for muestras in root2.iter('Muestra'):
                         rpm_samples = muestras.text.split(", ")
                 if root3.text == "Torque Corr":
