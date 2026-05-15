@@ -5,6 +5,9 @@ const nextConfig = {
   output: "export",
   trailingSlash: true,
   images: { unoptimized: true },
+  // Dev server is reached via a non-localhost hostname (container behind
+  // projects.vm.home); without this Next 16 blocks dev assets/HMR cross-origin.
+  allowedDevOrigins: ["projects.vm.home", "*.vm.home"],
 };
 
 export default nextConfig;

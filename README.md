@@ -30,6 +30,10 @@ docker compose up
 Then open <http://localhost:3000/>. The `.devcontainer` config points at the
 same compose service for VS Code Dev Containers.
 
+If you reach the dev server through a non-localhost hostname, add it to
+`allowedDevOrigins` in `next.config.mjs` — otherwise Next 16 blocks dev
+assets/HMR cross-origin and the page renders but never becomes interactive.
+
 ## Build static site
 
 ```
@@ -37,6 +41,15 @@ docker compose run --rm web npm run build
 ```
 
 The static site is written to `out/`.
+
+## Preview the production build
+
+Serves the static `out/` exactly as it deploys (no dev server / HMR):
+
+```
+docker compose run --rm web npm run build
+docker compose run --rm --service-ports web npm run preview
+```
 
 ## Deploy
 
