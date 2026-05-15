@@ -53,13 +53,11 @@ docker compose run --rm --service-ports web npm run preview
 
 ## Deploy
 
-- **Cloudflare Pages (Git, automatic)** — connect the repo, production branch
-  `master`, build command `npm run build`. `wrangler.jsonc` declares
-  `pages_build_output_dir: "out"`, so every push to `master` builds and
-  deploys automatically. No deploy command needed.
-- **Cloudflare Pages (deploy command)** — if a deploy command is required, use
-  `npx wrangler pages deploy --project-name=<your-pages-project>` (the build
-  dir comes from `wrangler.jsonc`).
+- **Cloudflare Workers Builds** — connect the repo as a **Worker** (not
+  Pages). `wrangler.jsonc` is an assets-only Worker serving `./out`. Settings:
+  build command `npm run build`, deploy command `npx wrangler deploy`, root
+  directory `/`. Workers Builds injects account credentials, so **no
+  `CLOUDFLARE_API_TOKEN` is needed**. Every push to `master` auto-deploys.
 - **Vercel** — zero config; the static export is detected automatically.
 
 ## Demo

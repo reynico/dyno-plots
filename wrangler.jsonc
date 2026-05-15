@@ -1,10 +1,12 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  // `name` MUST match the Cloudflare Pages project name shown in
-  // Workers & Pages (the project that owns dyno.nico.ninja). If it differs,
-  // change this value or pass --project-name on the deploy command.
   "name": "dyno-plots",
   "compatibility_date": "2026-05-15",
-  // Tells Cloudflare Pages which directory holds the static build to publish.
-  "pages_build_output_dir": "out"
+  // Assets-only Worker (same pattern as the vnaviewer project): no `main`,
+  // so `wrangler deploy` publishes the static export in ./out. Deployed via
+  // Cloudflare Workers Builds, which injects account credentials — no
+  // CLOUDFLARE_API_TOKEN needed.
+  "assets": {
+    "directory": "./out"
+  }
 }
