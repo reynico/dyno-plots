@@ -1,3 +1,10 @@
-venv/
 .vscode/
 .DS_Store
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+npm-debug.log*
