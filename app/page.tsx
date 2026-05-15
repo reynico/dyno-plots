@@ -2,7 +2,7 @@
 
 import { useCallback, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import { readDynoFile, type DynoRun } from "@/lib/parsers";
+import { readDynoFile, binSamplesPer100, type DynoRun } from "@/lib/parsers";
 
 // Plotly is client-only — keep it out of the static prerender.
 const DynoPlot = dynamic(() => import("@/components/DynoPlot"), { ssr: false });
@@ -73,8 +73,8 @@ export default function Home() {
                   </tr>
                 </thead>
                 <tbody>
-                  {run.samples.map((s, i) => (
-                    <tr key={i}>
+                  {binSamplesPer100(run.samples).map((s) => (
+                    <tr key={s.rpm}>
                       <td>{s.rpm}</td>
                       <td>{s.hp}</td>
                       <td>{s.tq}</td>

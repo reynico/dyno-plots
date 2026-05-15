@@ -99,6 +99,31 @@ function parseMwd(text: string): Sample[] {
   return samples;
 }
 
+/**
+ * Aggregates raw samples into one rounded row per 100 rpm for the table.
+ * Values within a bucket are averaged and rounded to whole numbers, so the
+ * table reads e.g. 3000 / 3100 / 3200 rpm with no decimals.
+ */
+export function binSamplesPer100(samples: Sample[]): Sample[] {
+  const buckets = new Map<number, { hp: number; tq: number; n: number }>();
+  for (const s of samples) {
+    if (!Number.isFinite(s.rpm)) continue;
+    const key = Math.round(s.rpm / 100) * 100;
+    const b = buckets.get(key) ?? { hp: 0, tq: 0, n: 0 };
+    b.hp += s.hp;
+    b.tq += s.tq;
+    b.n += 1;
+    buckets.set(key, b);
+  }
+  return [...buckets.entries()]
+    .sort((a, b) => a[0] - b[0])
+    .map(([rpm, b]) => ({
+      rpm,
+      hp: Math.round(b.hp / b.n),
+      tq: Math.round(b.tq / b.n),
+    }));
+}
+
 export function parseDynoFile(filename: string, text: string): DynoRun {
   const lower = filename.toLowerCase();
   let samples: Sample[] = [];
