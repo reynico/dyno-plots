@@ -29,31 +29,41 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="page">
+    <main
+      className="page"
+      onDragEnter={(e) => {
+        e.preventDefault();
+        setDragging(true);
+      }}
+      onDragOver={(e) => e.preventDefault()}
+      onDragLeave={(e) => {
+        if (e.currentTarget === e.target) setDragging(false);
+      }}
+      onDrop={(e) => {
+        e.preventDefault();
+        setDragging(false);
+        loadFiles(e.dataTransfer.files);
+      }}
+    >
       <div
         className={`dropzone${dragging ? " dragging" : ""}`}
         onClick={() => inputRef.current?.click()}
-        onDragOver={(e) => {
-          e.preventDefault();
-          setDragging(true);
-        }}
-        onDragLeave={() => setDragging(false)}
-        onDrop={(e) => {
-          e.preventDefault();
-          setDragging(false);
-          loadFiles(e.dataTransfer.files);
-        }}
       >
         Drag and Drop or <a>Select Files</a>
-        <input
-          ref={inputRef}
-          type="file"
-          multiple
-          accept=".csv,.ine,.ad3"
-          style={{ display: "none" }}
-          onChange={(e) => loadFiles(e.target.files)}
-        />
       </div>
+      {/* Sibling of the dropzone: keeps the programmatic click() from
+          bubbling back into onClick and getting blocked by the browser. */}
+      <input
+        ref={inputRef}
+        type="file"
+        multiple
+        accept=".csv,.ine,.ad3"
+        style={{ display: "none" }}
+        onChange={(e) => {
+          loadFiles(e.target.files);
+          e.target.value = ""; // allow re-selecting the same file
+        }}
+      />
 
       {error && <div className="error">{error}</div>}
 
