@@ -14,7 +14,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      {/* Browser extensions (Grammarly, etc.) inject attributes on <body>
+          before React hydrates — suppress the resulting mismatch warning. */}
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }
