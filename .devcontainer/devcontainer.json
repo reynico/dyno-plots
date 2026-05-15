@@ -1,6 +1,9 @@
 {
-	"name": "Python 3",
-	"image": "mcr.microsoft.com/devcontainers/python:1-3.12-bullseye",
-	"postCreateCommand": "pip3 install --user -r requirements.txt",
-	"shutdownAction": "stopContainer"
+	"name": "dyno-plots",
+	"dockerComposeFile": "../docker-compose.yml",
+	"service": "web",
+	"workspaceFolder": "/app",
+	"forwardPorts": [3000],
+	"postCreateCommand": "npm install",
+	"shutdownAction": "stopCompose"
 }
