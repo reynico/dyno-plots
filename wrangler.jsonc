@@ -1,0 +1,12 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "dyno-plots",
+  "compatibility_date": "2026-05-15",
+  // Assets-only Worker: no `main` script, so Cloudflare serves the static
+  // Next.js export in ./out directly. This is what makes the site the app
+  // instead of the default "Hello World" Worker.
+  "assets": {
+    "directory": "./out",
+    "not_found_handling": "404-page"
+  }
+}
