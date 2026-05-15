@@ -1,12 +1,10 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
+  // `name` MUST match the Cloudflare Pages project name shown in
+  // Workers & Pages (the project that owns dyno.nico.ninja). If it differs,
+  // change this value or pass --project-name on the deploy command.
   "name": "dyno-plots",
   "compatibility_date": "2026-05-15",
-  // Assets-only Worker: no `main` script, so Cloudflare serves the static
-  // Next.js export in ./out directly. This is what makes the site the app
-  // instead of the default "Hello World" Worker.
-  "assets": {
-    "directory": "./out",
-    "not_found_handling": "404-page"
-  }
+  // Tells Cloudflare Pages which directory holds the static build to publish.
+  "pages_build_output_dir": "out"
 }
