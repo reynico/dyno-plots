@@ -39,6 +39,7 @@ export default function DynoPlot({ runs }: { runs: DynoRun[] }) {
           mode: "lines+markers",
           type: "scatter",
           marker: { size: 4 },
+          hovertemplate: "%{y:.1f}<extra>whp " + run.name + "</extra>",
         });
         data.push({
           x,
@@ -47,6 +48,7 @@ export default function DynoPlot({ runs }: { runs: DynoRun[] }) {
           mode: "lines+markers",
           type: "scatter",
           marker: { size: 4 },
+          hovertemplate: "%{y:.1f}<extra>tq " + run.name + "</extra>",
         });
       }
 
@@ -54,7 +56,16 @@ export default function DynoPlot({ runs }: { runs: DynoRun[] }) {
         plot_bgcolor: GRAPH_BG,
         paper_bgcolor: GRAPH_BG,
         margin: { t: 30, r: 20, b: 40, l: 50 },
-        xaxis: { title: { text: "rpm" } },
+        hovermode: "x",
+        xaxis: {
+          title: { text: "rpm" },
+          showspikes: true,
+          spikemode: "across",
+          spikesnap: "data",
+          spikethickness: 1,
+          spikedash: "solid",
+          spikecolor: "#888888",
+        },
         yaxis: { nticks: 30, rangemode: "tozero" },
         legend: { orientation: "h" },
       };
